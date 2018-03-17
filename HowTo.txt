@@ -1,0 +1,156 @@
+                  BOILERPLATE
+      for those who would like to manipulate it
+--------------------------------------------------
+EXPRESS, EJS, REACT, REACT-DOM, BABEL ..., WEBPACK.
+
+I . BoilerPlate tree view:
+    Project
+        + views
+            - index.ejs
+
+        + public
+            + css
+            + js
+            + img
+            - app.js
+            ( - bundle.js will be generated in here )
+
+        - server.js
+        - webpack.config.js
+        ( - package.json will be generated in here )
+
+------------------------------------------------------
+
+II. Create Project folder
+    Terminal :
+      --> md MyProject
+      --> cd MyProject
+
+III. ReCreate the BoilerPlate tree view
+    Terminal :
+          --> md views public
+          --> nul> server.js
+          --> nul> webpack.config.js
+
+        Go inside /views folder and create index.ejs
+          --> cd views
+          --> nul> index.ejs
+
+        Go inside /public folder and create: css , js , img folders, app.js file
+          --> cd .. ( come back to public folder: we were previously in views )
+          --> cd public
+          --> md css js img
+          --> nul> app.js
+
+        Init your package.json
+          --> npm init ( if you'd like more infos you could or just skip it by hiting 'Enter')
+
+        You know what you'll be using so let's install those modules:
+          --> npm install --save express ejs react react-dom
+          --> npm install --save-dev webpack babel-loader babel-core babel-preset-es2015 babel-preset-react
+
+
+
+    Now your basic folders and files are in place, let's fill them and make it all work!
+
+IV. Open your IDE ( Integrated Development Editor) and write
+      - Add your project directory , if not previously done
+        a. - Open index.EJS
+            - create an html boilerplate such as :
+
+            --------------------------------------
+              --> <!DOCTYPE html>
+              <html>
+                <head>
+                  <meta charset="utf-8">
+                  <title>BoilerPlate</title>
+                </head>
+                <body>
+                  <div id="container"></div>
+                  <h1>Hello World</h1>
+                  <script src="/bundle.js"></script>
+                </body>
+              </html>
+              -------------------------------------
+              and safe the file.
+            - let's debrif some notions:
+                - In this boilerplate we added
+                  --> <div id="container"></div> (line 68 in here)
+                      which is the div we need to poor out our futur React component code thanks to the id "container"
+                      ( will correspond IN THE FUTUR to : -->
+                        ReactDOM.render { <h1> Hello World ! </h1> , document.getElementById('container') }
+                      )
+                      we will find in the future code on app.js
+
+                  --> <script src="/bundle.js"><script>
+                      is the file wich will be generated later by webpack
+
+        b. - Open server.js
+              - create your server and write:
+
+              -------------------------------------
+              var express   = require('express');
+              var app = express();
+
+              app.set('view engine', 'ejs');
+              app.use(express.static('public'));
+
+              app.get('/', function(req, res) {                       // when you go to your localhost, it renders your index.ejs
+                res.render('index');
+              });
+
+              app.listen(8080, function () {                          // here is the port you will use with localhost ( = localhost:8080)
+                console.log("Server listening on port 8080");
+              });
+              ----------------------------------------
+              save the file.
+
+        c. - Open webpack.config.js
+              which is the configuration for building your bundle.js (after executing the
+              the command .\node_modules\.bin\webpack later)
+              write :
+              ---------------------------------------------------------
+              module.exports = {
+                entry: './public/app.js',
+                output: { path: __dirname+'/public/', filename: 'bundle.js' },
+                module: {
+                  rules: [
+                    {
+                       test: /\.(js|jsx)$/,
+                       exclude: /node_modules/,
+                       use: [
+                       {
+                          loader: 'babel-loader',
+                          query: {
+                            presets: ['es2015', 'react']
+                          }
+                        }
+                       ]
+                    }
+                  ]
+                }
+              };
+              ---------------------------------------------------------
+
+              Few notions :
+                  - entry ( l. 111 ) is where you ask your webpack to look for your files
+                  - output ( l. 112 ) is where you ask webpack to create your bundle
+                  - don't pay attention to the rest for the moment.
+
+
+
+V. Now that everything is settled let's return in Terminal finishing it
+  First of all you could write:
+    --> node server.js which will return "Server listening on port 8080"
+    --> go to your browser navigator and write: localhost:8080
+      You'll find out your <h1>Hello World!</h1> from your index.js (have a look on this file line 69)
+  Secondly enough fun and let's get real: Return to your Terminal write:
+    --> .\node_modules\.bin\webpack (which will build you the bundle.js that we disposed within index.ejs)
+
+    Kaboom. Now you could handle a React Project.
+    You should know that for any changes you have to re build your bundle.js by running .\node_modules\.bin\webpack!
+    Enjoy
+
+NB: apparently there is an update on webpack that you could install then use the
+    same command from above it should work.
+    with the same command from above
