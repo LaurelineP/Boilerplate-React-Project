@@ -145,10 +145,11 @@ V. Now that everything is settled let's return in Terminal finishing it
     --> go to your browser navigator and write: localhost:8080
       You'll find out your <h1>Hello World!</h1> from your index.js (have a look on this file line 69)
   Secondly enough fun and let's get real: Return to your Terminal write:
-    --> .\node_modules\.bin\webpack (which will build you the bundle.js that we disposed within index.ejs)
+    --> .\node_modules\.bin\webpack (which will build you the bundle.js that we disposed within index.ejs) ( for windows )
+    --> ./node_modules/.bin/webpack (which will build you the bundle.js that we disposed within index.ejs) ( for mac )
 
     Kaboom. Now you could handle a React Project.
-    You should know that for any changes you have to re build your bundle.js by running .\node_modules\.bin\webpack!
+    /!\ You should know that for any changes you have to re build your bundle.js by running .\node_modules\.bin\webpack!
     Enjoy
 
 NB: apparently there is an update on webpack that you could install then use the
